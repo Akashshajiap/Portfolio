@@ -4,7 +4,7 @@ Welcome to the source code for my personal data analytics portfolio! This websit
 
 ## 🚀 Live Demo
 
-*(Add your deployed link here, e.g., https://akashshajiap.github.io)*
+[https://akashshajiap.github.io/Portfolio/](https://akashshajiap.github.io/Portfolio/)
 
 ## 🛠️ Built With
 
