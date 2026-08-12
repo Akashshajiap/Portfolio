@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects – Portfolio</title>
+    <meta name="description" content="A showcase of data analytics, financial reporting, and machine learning projects.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff5722;
+            --bg: #0a0c1a;
+            --card-bg: #111328;
+            --border: rgba(255,255,255,0.08);
+            --text-main: #ffffff;
+            --text-muted: #8b8fa8;
+            --tag-color: #ff5722;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #000;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+        #projects-content {
+            position: relative;
+            z-index: 10;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 32px 60px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            position: sticky;
+            top: 0;
+            background: transparent;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #fff;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: #fff; }
+        .btn-nav {
+            background: #fff !important;
+            color: #000 !important;
+            padding: 10px 22px !important;
+            border-radius: 30px !important;
+            font-weight: 600 !important;
+            font-size: 14px !important;
+        }
+        .page-header {
+            padding: 80px 60px 60px;
+            max-width: 860px;
+        }
+        .page-header .label {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+        .page-header h1 {
+            font-size: 80px;
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -3px;
+            margin-bottom: 28px;
+        }
+        .page-header p {
+            font-size: 17px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 580px;
+        }
+        .projects-container {
+            padding: 20px 60px 100px;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-6px);
+            background: rgba(255, 255, 255, 0.09);
+            box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .card-image-wrap { position: relative; }
+        .card-image {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            display: block;
+            background: #0d0f22;
+        }
+        .card-github {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 34px;
+            height: 34px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .card-github:hover { background: rgba(255,255,255,0.3); }
+        .card-body {
+            padding: 28px 28px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-body h2 {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 14px;
+            color: #fff;
+        }
+        .card-body p {
+            font-size: 14.5px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            flex: 1;
+        }
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px 28px 26px;
+            border-top: 1px solid var(--border);
+            margin-top: 20px;
+        }
+        .tag {
+            color: var(--tag-color);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* Footer Styles */
+        .site-footer {
+            margin-top: 40px;
+            padding: 60px 80px 40px;
+            background: rgba(10, 12, 26, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -1px;
+        }
+        .footer-socials {
+            display: flex;
+            gap: 16px;
+        }
+        .social-icon-footer {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .social-icon-footer:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            border-color: rgba(255,255,255,0.3);
+        }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+        }
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+        .footer-links a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 960px) {
+            .projects-grid { grid-template-columns: 1fr 1fr; }
+            nav, .page-header, .projects-container { padding-left: 28px; padding-right: 28px; }
+            .page-header h1 { font-size: 52px; }
+            .site-footer { padding: 40px 30px 30px; }
+            .footer-content, .footer-bottom {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+        }
+        @media (max-width: 600px) {
+            .projects-grid { grid-template-columns: 1fr; }
+            .page-header h1 { font-size: 40px; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="scroll-sequence"></canvas>
+    <div id="projects-content">
+
+    <nav>
+        <a href="index.html" class="logo">Akash A P</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#work">Work</a>
+            <a href="projects.html" class="active">Projects</a>
+            <a href="index.html#contact" class="btn-nav">Get in touch &rarr;</a>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="label">MY WORK</div>
+        <h1>Projects</h1>
+        <p>Following projects showcase my skills and experience through examples of my work. Each project is briefly described with links to code repositories in it.</p>
+    </div>
+
+    <div class="projects-container">
+        <div class="projects-grid">
+
+            <div class="project-card">
+                <div class="card-image-wrap">
+                    <img class="card-image" src="project_health.png" alt="Smart Health Prediction System">
+                    <a href="#" class="card-github" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                </div>
+                <div class="card-body">
+                    <h2>Smart Health Prediction System</h2>
+                    <p>Designed and developed a predictive analytics system using Decision Tree, Naive Bayes, and Neural Network models with a Django web interface and end-to-end data pipeline.</p>
+                </div>
+                <div class="card-tags">
+                    <span class="tag">#Python</span>
+                    <span class="tag">#Django</span>
+                    <span class="tag">#Machine Learning</span>
+                    <span class="tag">#Data Pipeline</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="card-image-wrap">
+                    <img class="card-image" src="project_sales.png" alt="Retail Sales Excel Dashboard">
+                    <a href="#" class="card-github" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                </div>
+                <div class="card-body">
+                    <h2>Retail Sales Excel Dashboard</h2>
+                    <p>Built an interactive, self-service Excel dashboard to analyze and visualize retail sales data, replacing static reports and significantly improving stakeholder reporting turnaround.</p>
+                </div>
+                <div class="card-tags">
+                    <span class="tag">#Excel</span>
+                    <span class="tag">#Data Analysis</span>
+                    <span class="tag">#Dashboards</span>
+                    <span class="tag">#KPI Reporting</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="card-image-wrap">
+                    <img class="card-image" src="project_finance.png" alt="Financial Reporting & GST Compliance">
+                    <a href="#" class="card-github" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                </div>
+                <div class="card-body">
+                    <h2>Financial Reporting &amp; GST Compliance System</h2>
+                    <p>Standardized data consolidation into repeatable reporting templates for Balance Sheets and P&amp;L statements while maintaining 100% statutory compliance.</p>
+                </div>
+                <div class="card-tags">
+                    <span class="tag">#Excel (Advanced)</span>
+                    <span class="tag">#Financial Modeling</span>
+                    <span class="tag">#GST Compliance</span>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card">
+                <div class="card-image-wrap">
+                    <img class="card-image" src="project_pipeline.png" alt="Automated Data Pipeline & Anomaly Detection">
+                    <a href="#" class="card-github" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                </div>
+                <div class="card-body">
+                    <h2>Automated Data Pipeline &amp; Anomaly Detection</h2>
+                    <p>Automated data cleaning and transformation pipelines in Python, improving forecasting reliability by 18% via statistical analysis and EDA.</p>
+                </div>
+                <div class="card-tags">
+                    <span class="tag">#Python</span>
+                    <span class="tag">#pandas / NumPy</span>
+                    <span class="tag">#EDA &amp; Statistics</span>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card">
+                <div class="card-image-wrap">
+                    <img class="card-image" src="project_segmentation.png" alt="Customer Segmentation & Churn Analysis">
+                    <a href="#" class="card-github" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                </div>
+                <div class="card-body">
+                    <h2>Customer Segmentation &amp; Churn Analysis</h2>
+                    <p>Developed a K-Means clustering model in Python to segment customers and predict churn, visualizing findings in Tableau to drive retention strategies.</p>
+                </div>
+                <div class="card-tags">
+                    <span class="tag">#Python</span>
+                    <span class="tag">#Machine Learning</span>
+                    <span class="tag">#Tableau</span>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+            <div class="project-card">
+                <div class="card-image-wrap">
+                    <img class="card-image" src="project_reconciliation.png" alt="Automated AP/AR Reconciliation Tool">
+                    <a href="#" class="card-github" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                </div>
+                <div class="card-body">
+                    <h2>Automated AP/AR Reconciliation Tool</h2>
+                    <p>Engineered an automated Python-based tool linking SQL databases with Excel to reconcile Accounts Payable and Receivable, cutting manual matching time by 60%.</p>
+                </div>
+                <div class="card-tags">
+                    <span class="tag">#Python</span>
+                    <span class="tag">#SQL</span>
+                    <span class="tag">#Excel VBA</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-logo">Akash A P</div>
+            <div class="footer-socials">
+                <a href="#" class="social-icon-footer" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="#" class="social-icon-footer" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="#" class="social-icon-footer" title="X / Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Akash A P. All rights reserved. &mdash; <a href="index.html" style="color:var(--primary);text-decoration:none;margin-left:8px;">Back to Home</a></p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    </div><!-- end #projects-content -->
+
+    <script>
+        const canvas = document.getElementById("scroll-sequence");
+        const context = canvas.getContext("2d");
+        const dpr = window.devicePixelRatio || 1;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            context.scale(dpr, dpr);
+        }
+        resizeCanvas();
+
+        const frameCount = 145;
+        const currentFrame = index =>
+            `ezgif-58a4dfcc0d936184-jpg/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`;
+
+        const images = [];
+        for (let i = 0; i < frameCount; i++) {
+            const img = new Image();
+            img.src = currentFrame(i);
+            images.push(img);
+        }
+
+        function drawImage(img) {
+            if (!img.complete || img.naturalWidth === 0) return;
+            const canvasW = window.innerWidth;
+            const canvasH = window.innerHeight;
+            const hRatio = canvasW / img.width;
+            const vRatio = canvasH / img.height;
+            const ratio = Math.max(hRatio, vRatio);
+            const cx = (canvasW - img.width * ratio) / 2;
+            const cy = (canvasH - img.height * ratio) / 2;
+            context.clearRect(0, 0, canvasW, canvasH);
+            context.drawImage(img, 0, 0, img.width, img.height, cx, cy, img.width * ratio, img.height * ratio);
+        }
+
+        // Draw frame 1 on load (matches the landing page initial look)
+        images[0].onload = () => drawImage(images[0]);
+
+        let currentFrameIndex = 0;
+        let targetScrollFraction = 0;
+        let currentScrollFraction = 0;
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop;
+            const maxScrollTop = document.documentElement.scrollHeight - window.innerHeight;
+            targetScrollFraction = scrollTop / maxScrollTop;
+        });
+
+        function updateAnimation() {
+            // Smoothly interpolate current scroll fraction towards target
+            currentScrollFraction += (targetScrollFraction - currentScrollFraction) * 0.08;
+
+            const maxAllowedFrame = 110;
+            const frameIndex = Math.min(
+                maxAllowedFrame,
+                Math.max(0, Math.floor(currentScrollFraction * maxAllowedFrame))
+            );
+
+            if (images[frameIndex]) {
+                drawImage(images[frameIndex]);
+                currentFrameIndex = frameIndex;
+            }
+
+            window.requestAnimationFrame(updateAnimation);
+        }
+
+        // Start the continuous render loop
+        window.requestAnimationFrame(updateAnimation);
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            if (images[currentFrameIndex]) drawImage(images[currentFrameIndex]);
+        });
+    </script>
+
+</body>
+</html>
+

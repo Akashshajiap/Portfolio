@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKASH A P - The Analyst</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary: #ff5722;
+            --text-main: #ffffff;
+            --text-muted: #a3a3a3;
+            --container-width: 1600px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+
+        #content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 40px;
+            box-sizing: border-box;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            font-size: 15px;
+        }
+
+        .links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+        }
+
+        .links a:hover {
+            opacity: 0.7;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--text-main);
+            color: #000 !important;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .btn.btn-primary {
+            background-color: var(--primary);
+            color: #fff !important;
+        }
+
+        .btn span {
+            background-color: var(--primary);
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 14px;
+        }
+
+        .btn.btn-white span {
+            background-color: var(--primary);
+            color: #fff;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 12vh;
+        }
+
+        .hero-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .hero-title h4 {
+            font-size: 28px;
+            font-weight: 500;
+            margin: 0 0 10px 0;
+        }
+
+        .hero-title h1 {
+            font-size: 110px;
+            line-height: 0.95;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -3px;
+        }
+
+        .hero-desc {
+            max-width: 380px;
+            padding-top: 30px;
+        }
+
+        .hero-desc h3 {
+            font-size: 28px;
+            font-weight: 600;
+            margin: 0 0 15px 0;
+            line-height: 1.3;
+        }
+
+        .hero-desc p {
+            color: var(--text-muted);
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .services {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25vh;
+            padding-bottom: 60px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .service {
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+
+        .service span {
+            display: block;
+            color: var(--primary);
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        /* Logos Banner */
+        .logos-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 60px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            margin-bottom: 15vh;
+        }
+
+        .logos-banner p {
+            font-size: 14px;
+            color: var(--text-main);
+            margin: 0;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .logos {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .logos div {
+            font-size: 22px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logos div::before {
+            content: '';
+            display: block;
+            width: 22px;
+            height: 22px;
+            background-color: #fff;
+            border-radius: 50%;
+        }
+
+        .logos div:nth-child(2):before {
+            border-radius: 0;
+            clip-path: polygon(0% 0%, 100% 0%, 50% 50%, 100% 100%, 0% 100%, 50% 50%);
+        }
+
+        .logos div:nth-child(3):before {
+            border-radius: 50%;
+            background: linear-gradient(90deg, #fff 50%, transparent 50%);
+            border: 2px solid #fff;
+            box-sizing: border-box;
+        }
+
+        .logos div:nth-child(4):before {
+            background-color: transparent;
+            border: 5px solid #fff;
+            box-sizing: border-box;
+        }
+
+        /* About Work Section */
+        .about-work {
+            padding-bottom: 15vh;
+        }
+
+        .about-text-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 80px;
+        }
+
+        .about-title {
+            max-width: 650px;
+        }
+
+        .about-title h5 {
+            color: var(--primary);
+            font-size: 22px;
+            font-weight: 600;
+            margin: 0 0 20px 0;
+        }
+
+        .about-title h2 {
+            font-size: 68px;
+            line-height: 1.05;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -2px;
+        }
+
+        .about-desc {
+            max-width: 420px;
+            padding-top: 40px;
+        }
+
+        .about-desc p {
+            font-size: 22px;
+            line-height: 1.5;
+            margin: 0 0 40px 0;
+            font-weight: 500;
+        }
+
+        .cta-row {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .cta-row span {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .service-cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .service-cards-row {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 35px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            width: 250px;
+            box-sizing: border-box;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.09);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 2px;
+            background: linear-gradient(135deg, #a855f7, #06b6d4);
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: -1;
+        }
+
+        .sc-icon {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-card h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 20px 0 0 0;
+            color: #fff;
+            line-height: 1.3;
+        }
+
+        .sc-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .sc-tag {
+            background-color: rgba(6, 182, 212, 0.15);
+            color: #06b6d4;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        /* Skills Section */
+        .skills-section {
+            padding: 10vh 0 15vh 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .skills-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .skill-ball-wrapper {
+            filter: drop-shadow(0px 15px 15px rgba(0, 0, 0, 0.6));
+        }
+
+        .skill-ball {
+            width: 110px;
+            height: 110px;
+            background: radial-gradient(circle at 35% 35%, #ffffff, #dcdcdc, #888888);
+            clip-path: polygon(29% 0%, 71% 0%, 100% 29%, 100% 71%, 71% 100%, 29% 100%, 0% 71%, 0% 29%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 55px;
+            position: relative;
+        }
+
+        .skill-ball::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.15) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .skill-ball i {
+            z-index: 2;
+            filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-25px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+
+        /* Timeline Section */
+        .experience-section {
+            padding: 15vh 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .exp-header {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .exp-header p {
+            color: var(--text-muted);
+            font-size: 16px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin: 0 0 15px 0;
+            font-weight: 500;
+        }
+
+        .exp-header h2 {
+            font-size: 64px;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -2px;
+            color: #fff;
+        }
+
+        .timeline {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background-color: #fff;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 70px;
+            position: relative;
+            width: 100%;
+        }
+
+        .timeline-item.left {
+            flex-direction: row;
+        }
+
+        .timeline-item.right {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: calc(50% - 70px);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 12px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-date {
+            width: calc(50% - 70px);
+            padding-top: 25px;
+            /* align with icon */
+            font-size: 20px;
+            font-weight: 600;
+            color: #e0e0e0;
+        }
+
+        .timeline-item.left .timeline-date {
+            position: absolute;
+            right: -170px;
+            text-align: left;
+        }
+
+        .timeline-item.right .timeline-date {
+            position: absolute;
+            left: -170px;
+            text-align: right;
+        }
+
+        .timeline-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            position: absolute;
+            left: 50%;
+            top: 35px;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            color: #fff;
+        }
+
+        .timeline-content h3 {
+            font-size: 30px;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: #fff;
+        }
+
+        .timeline-content h4 {
+            font-size: 18px;
+            font-weight: 500;
+            color: #a3a3a3;
+            margin: 0 0 25px 0;
+        }
+
+        .timeline-content ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .timeline-content li {
+            color: #d0d0d0;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .timeline-content li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Social Sidebar */
+        #social-sidebar {
+            position: fixed;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .social-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(30, 30, 50, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(220, 220, 240, 1);
+            font-size: 20px;
+            text-decoration: none;
+            transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.35);
+            transform: scale(1.12);
+        }
+
+        /* Footer Styles */
+        .site-footer {
+            margin-top: 80px;
+            padding: 60px 80px 40px;
+            background: rgba(10, 12, 26, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -1px;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-icon-footer {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-icon-footer:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 900px) {
+            .site-footer {
+                padding: 40px 30px 30px;
+            }
+
+            .footer-content,
+            .footer-bottom {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="scroll-sequence"></canvas>
+
+    <!-- Social Sidebar -->
+    <div id="social-sidebar">
+        <a href="https://github.com/Akashshajiap" target="_blank" class="social-icon" title="GitHub"><i
+                class="fa-brands fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/akashshajiap" target="_blank" class="social-icon" title="LinkedIn"><i
+                class="fa-brands fa-linkedin-in"></i></a>
+        <a href="#" class="social-icon" title="X / Twitter">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path
+                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+        </a>
+        <a href="#" class="social-icon" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+
+    <div id="content">
+        <nav>
+            <div class="logo">Akash A P</div>
+            <div class="links">
+                <a href="#">Home</a>
+                <a href="#about">About</a>
+                <a href="#work">Work</a>
+                <a href="projects.html">Projects</a>
+                <a href="./planet/resume.pdf" target="_blank">Resume</a>
+                <a href="#contact" class="btn btn-white">Get in touch <span>&rarr;</span></a>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <style>
+                @keyframes cursor-blink {
+
+                    0%,
+                    100% {
+                        opacity: 1;
+                    }
+
+                    50% {
+                        opacity: 0;
+                    }
+                }
+
+                .rotating-text-wrapper {
+                    display: inline-block;
+                    overflow: hidden;
+                    vertical-align: bottom;
+                    height: 1.3em;
+                    position: relative;
+                }
+
+                .rotating-text-inner {
+                    display: flex;
+                    flex-direction: column;
+                    animation: rotateText 10s ease-in-out infinite;
+                }
+
+                .rotating-text-inner span {
+                    display: block;
+                    line-height: 1.3em;
+                    height: 1.3em;
+                    color: #9b51e0;
+                    white-space: nowrap;
+                }
+
+                @keyframes rotateText {
+                    0% {
+                        transform: translateY(0);
+                        opacity: 1;
+                    }
+
+                    10% {
+                        transform: translateY(0);
+                        opacity: 1;
+                    }
+
+                    15% {
+                        transform: translateY(-20%);
+                        opacity: 0.2;
+                    }
+
+                    18% {
+                        transform: translateY(-20%);
+                        opacity: 1;
+                    }
+
+                    28% {
+                        transform: translateY(-20%);
+                        opacity: 1;
+                    }
+
+                    33% {
+                        transform: translateY(-40%);
+                        opacity: 0.2;
+                    }
+
+                    36% {
+                        transform: translateY(-40%);
+                        opacity: 1;
+                    }
+
+                    53% {
+                        transform: translateY(-40%);
+                        opacity: 1;
+                    }
+
+                    58% {
+                        transform: translateY(-60%);
+                        opacity: 0.2;
+                    }
+
+                    61% {
+                        transform: translateY(-60%);
+                        opacity: 1;
+                    }
+
+                    73% {
+                        transform: translateY(-60%);
+                        opacity: 1;
+                    }
+
+                    78% {
+                        transform: translateY(-80%);
+                        opacity: 0.2;
+                    }
+
+                    81% {
+                        transform: translateY(-80%);
+                        opacity: 1;
+                    }
+
+                    95% {
+                        transform: translateY(-80%);
+                        opacity: 1;
+                    }
+
+                    100% {
+                        transform: translateY(0);
+                        opacity: 1;
+                    }
+                }
+            </style>
+            <div class="hero-intro"
+                style="margin-bottom: 140px; position: relative; padding-left: 40px; padding-top: 10px;">
+                <!-- Decorative left line with dot -->
+                <div
+                    style="position: absolute; left: 0; top: 25px; bottom: -40px; width: 4px; background: linear-gradient(to bottom, #9b51e0, rgba(155, 81, 224, 0)); border-radius: 2px;">
+                    <div
+                        style="position: absolute; top: -14px; left: -6px; width: 16px; height: 16px; background: #9b51e0; border-radius: 50%;">
+                    </div>
+                </div>
+
+                <h1
+                    style="font-size: clamp(60px, 7vw, 100px); font-weight: 800; line-height: 1.1; margin-bottom: 30px; letter-spacing: -3px; color: #fff;">
+                    Hi, I'm <span style="color: #9b51e0;">Akash A P</span>
+                </h1>
+                <h2
+                    style="font-size: clamp(26px, 3.5vw, 50px); font-weight: 600; line-height: 1.3; color: #fff; letter-spacing: -1px; margin: 0;">
+                    I specialize in<br>
+                    <span class="rotating-text-wrapper">
+                        <span class="rotating-text-inner">
+                            <span>Financial &amp; Commercial Analytics</span>
+                            <span>Power BI &amp; Tableau Dashboards</span>
+                            <span>Data Cleaning &amp; Automation</span>
+                            <span>Revenue &amp; Cost Trends Analysis</span>
+                            <!-- duplicate first for seamless loop -->
+                            <span>Financial &amp; Commercial Analytics</span>
+                        </span>
+                    </span>
+                </h2>
+            </div>
+
+            <div id="about" class="hero-top" style="margin-bottom: 20vh;">
+                <div class="hero-title">
+                    <h4 style="text-transform: uppercase; letter-spacing: 2px;">Introduction</h4>
+                    <h1>Overview</h1>
+                </div>
+                <div class="hero-desc" style="max-width: 700px; text-align: left; padding-top: 10px;">
+                    <p style="font-size: 18px; line-height: 1.8; color: #d0d0d0;">
+                        Commercially minded Data and Financial Analyst with 1+ year of experience in financial
+                        reporting, revenue analysis, and business process improvement, complemented by a Data Analytics
+                        internship using Excel, SQL, Python, Power BI, and Tableau. Experienced in analysing business
+                        data, identifying trends, building KPI dashboards, and transforming complex datasets into
+                        actionable insights for stakeholders. Skilled in reporting automation, cross-functional
+                        collaboration, and AI-assisted analytics, with a strong interest in commercial strategy, pricing
+                        analysis, product performance, and revenue growth.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section class="about-work">
+            <div class="about-text-row">
+                <div class="about-title">
+                    <h5 style="text-transform: uppercase;">Behind the Data</h5>
+                    <h2>Analyzing Data.<br>Finding Patterns.<br>Driving Decisions.</h2>
+                </div>
+                <div class="about-desc">
+                    <p>I'm a Data Analyst who turns complex datasets into clear, actionable insights using SQL, Python,
+                        Excel, Power BI, and Tableau.</p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Service Cards before Work Experience -->
+        <section class="about-work" style="padding-top: 0;">
+            <div class="service-cards-container">
+                <div class="service-cards-row">
+                    <div class="service-card">
+                        <div class="sc-icon"><i class="fa-brands fa-python"
+                                style="color: #f5c024; font-size: 45px;"></i></div>
+                        <h4>Financial<br>Analytics</h4>
+                        <div class="sc-tags">
+                            <span class="sc-tag">#Python</span><span class="sc-tag">#EDA</span><span
+                                class="sc-tag">#Pandas</span><span class="sc-tag">#NumPy</span>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="sc-icon"><i class="fa-solid fa-chart-pie"
+                                style="color: #f2c811; font-size: 45px;"></i></div>
+                        <h4>Power BI &<br>Tableau</h4>
+                        <div class="sc-tags">
+                            <span class="sc-tag">#PowerBI</span><span class="sc-tag">#Tableau</span><span
+                                class="sc-tag">#KPI Dashboards</span><span class="sc-tag">#Data Viz</span>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="sc-icon"><i class="fa-solid fa-database"
+                                style="color: #00758f; font-size: 45px;"></i></div>
+                        <h4>SQL & Data<br>Pipelines</h4>
+                        <div class="sc-tags">
+                            <span class="sc-tag">#SQL</span><span class="sc-tag">#MySQL</span><span
+                                class="sc-tag">#PostgreSQL</span><span class="sc-tag">#ETL</span>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="sc-icon"><i class="fa-solid fa-file-excel"
+                                style="color: #217346; font-size: 45px;"></i></div>
+                        <h4>Financial<br>Reporting</h4>
+                        <div class="sc-tags">
+                            <span class="sc-tag">#Excel</span><span class="sc-tag">#P&L</span><span
+                                class="sc-tag">#Balance Sheet</span><span class="sc-tag">#GST</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-cards-row">
+                    <div class="service-card">
+                        <div class="sc-icon"><i class="fa-solid fa-hand-holding-dollar"
+                                style="color: #f5c024; font-size: 45px;"></i></div>
+                        <h4>Budget &<br>Forecasting</h4>
+                        <div class="sc-tags">
+                            <span class="sc-tag">#Budgeting</span><span class="sc-tag">#Forecasting</span><span
+                                class="sc-tag">#Variance Analysis</span>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="sc-icon"><i class="fa-solid fa-brain" style="color: #0d6efd; font-size: 45px;"></i>
+                        </div>
+                        <h4>Gen AI &<br>Automation</h4>
+                        <div class="sc-tags">
+                            <span class="sc-tag">#GenAI</span><span class="sc-tag">#Automation</span><span
+                                class="sc-tag">#Prompt Eng.</span>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="sc-icon"><i class="fa-brands fa-r-project"
+                                style="color: #276dc3; font-size: 45px;"></i></div>
+                        <h4>R Language &<br>Stats</h4>
+                        <div class="sc-tags">
+                            <span class="sc-tag">#R</span><span class="sc-tag">#Statistical Analysis</span><span
+                                class="sc-tag">#ggplot2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="work" class="experience-section">
+            <div class="exp-header">
+                <p>WHAT I HAVE DONE SO FAR</p>
+                <h2>Work Experience</h2>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>Data Analytics Intern</h3>
+                        <h4>QIS Academy</h4>
+                        <ul>
+                            <li>Analyzed financial and operational data to surface revenue and cost trends using Excel,
+                                SQL, and Python.</li>
+                            <li>Improved stakeholder reporting turnaround by 45% by building interactive Power BI and
+                                Tableau KPI dashboards.</li>
+                            <li>Reduced manual reporting effort by approximately 40% by automating data cleaning and
+                                transformation pipelines in Python.</li>
+                            <li>Improved forecasting reliability by 18% by performing statistical analysis and
+                                exploratory data analysis (EDA) across segmented business datasets.</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-icon">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                    <div class="timeline-date">April 2026 – Present</div>
+                </div>
+
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>Junior Accountant</h3>
+                        <h4>Western Trade Links — Kannur, Kerala, India</h4>
+                        <ul>
+                            <li>Managed client account billing and vendor invoicing, reducing payment delays by 18%
+                                through monthly account reconciliations.</li>
+                            <li>Cut reconciliation discrepancies by 22% by performing monthly bank reconciliations and
+                                cross-validating transaction records.</li>
+                            <li>Improved on-time delivery of financial reports to 100% by standardizing Balance Sheet
+                                and Profit &amp; Loss reporting templates.</li>
+                            <li>Maintained 100% statutory compliance across GST filings and payroll cycles by
+                                proactively tracking regulatory deadlines.</li>
+                            <li>Reduced invoice processing turnaround by 25% by standardizing daily transaction
+                                workflows.</li>
+                            <li>Achieved zero material audit findings across annual audit cycles by supporting the
+                                annual audit process.</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-icon">
+                        <i class="fa-solid fa-building"></i>
+                    </div>
+                    <div class="timeline-date">December 2024 – March 2026</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills section after Work Experience -->
+        <section class="skills-section">
+            <div class="skills-row">
+                <div class="skill-ball-wrapper" style="animation: float 4s ease-in-out infinite;">
+                    <div class="skill-ball"><i class="fa-brands fa-python" style="color: #3776AB;"></i></div>
+                </div>
+                <div class="skill-ball-wrapper" style="animation: float 4.5s ease-in-out infinite 0.5s;">
+                    <div class="skill-ball"><i class="fa-solid fa-database" style="color: #4479A1;"></i></div>
+                </div>
+                <div class="skill-ball-wrapper" style="animation: float 3.8s ease-in-out infinite 1s;">
+                    <div class="skill-ball"><i class="fa-solid fa-file-excel" style="color: #217346;"></i></div>
+                </div>
+                <div class="skill-ball-wrapper" style="animation: float 4.2s ease-in-out infinite 0.2s;">
+                    <div class="skill-ball"><i class="fa-solid fa-chart-column" style="color: #F2C811;"></i></div>
+                </div>
+                <div class="skill-ball-wrapper" style="animation: float 4.6s ease-in-out infinite 0.8s;">
+                    <div class="skill-ball"><i class="fa-solid fa-chart-pie" style="color: #E97627;"></i></div>
+                </div>
+                <div class="skill-ball-wrapper" style="animation: float 4.1s ease-in-out infinite 0.4s;">
+                    <div class="skill-ball"><span
+                            style="font-size: 22px; font-weight: 700; color: #092E20; z-index: 2; font-family: sans-serif; letter-spacing: -1px;">django</span>
+                    </div>
+                </div>
+                <div class="skill-ball-wrapper" style="animation: float 4.3s ease-in-out infinite 0.9s;">
+                    <div class="skill-ball"><i class="fa-solid fa-leaf" style="color: #47A248;"></i></div>
+                </div>
+            </div>
+            <div class="skills-row" style="margin-top: 10px;">
+                <div class="skill-ball-wrapper" style="animation: float 4.4s ease-in-out infinite 0.3s;">
+                    <div class="skill-ball"><i class="fa-brands fa-react" style="color: #61DAFB;"></i></div>
+                </div>
+                <div class="skill-ball-wrapper" style="animation: float 3.9s ease-in-out infinite 0.7s;">
+                    <div class="skill-ball"><i class="fa-brands fa-git-alt" style="color: #F05032;"></i></div>
+                </div>
+            </div>
+        </section>
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section"
+            style="display: flex; gap: 40px; padding: 60px 80px; align-items: stretch; margin-top: 50px;">
+            <!-- Left Side: Form -->
+            <div class="contact-form-container"
+                style="flex: 1; background: rgba(17, 13, 31, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 40px;">
+                <p
+                    style="color: #a3a3a3; letter-spacing: 2px; text-transform: uppercase; font-size: 14px; margin-bottom: 10px;">
+                    Get in touch</p>
+                <h2 style="font-size: 50px; font-weight: 800; margin-bottom: 30px; margin-top: 0; line-height: 1.1;">
+                    Contact Me</h2>
+
+                <p style="margin: 5px 0;">Email: <strong>akashshajiap2003@gmail.com</strong></p>
+                <p style="margin: 5px 0 30px 0;">Phone: <strong>+91 7510956964</strong></p>
+
+                <form style="display: flex; flex-direction: column; gap: 20px;">
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500;">Your Name</label>
+                        <input type="text" placeholder="Insert Your name here..."
+                            style="width: 100%; padding: 15px; border-radius: 10px; border: none; background: #1a162d; color: #fff; box-sizing: border-box; font-family: inherit;">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500;">Email Address</label>
+                        <input type="email" placeholder="What's your email address?"
+                            style="width: 100%; padding: 15px; border-radius: 10px; border: none; background: #1a162d; color: #fff; box-sizing: border-box; font-family: inherit;">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500;">Your Message</label>
+                        <textarea rows="4" placeholder="What you want to say...?"
+                            style="width: 100%; padding: 15px; border-radius: 10px; border: none; background: #1a162d; color: #fff; box-sizing: border-box; font-family: inherit; resize: vertical;"></textarea>
+                    </div>
+                    <button type="submit"
+                        style="align-self: flex-start; padding: 12px 30px; border-radius: 10px; background: #1a162d; color: #fff; font-weight: bold; border: none; cursor: pointer; margin-top: 10px; box-shadow: 0px 4px 10px rgba(0,0,0,0.3);">Send</button>
+                </form>
+            </div>
+
+            <!-- Right Side: Earth Model -->
+            <div class="contact-earth-container"
+                style="flex: 1.2; display: flex; align-items: center; justify-content: center;">
+                <model-viewer src="./planet/scene.gltf" auto-rotate camera-controls shadow-intensity="1"
+                    style="width: 100%; height: 700px; background-color: transparent;" interaction-prompt="none"
+                    disable-zoom disable-pan>
+                </model-viewer>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <div class="footer-logo">Akash A P</div>
+                <div class="footer-socials">
+                    <a href="https://github.com/Akashshajiap" target="_blank" class="social-icon-footer"
+                        title="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/akashshajiap" target="_blank" class="social-icon-footer"
+                        title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon-footer" title="X / Twitter">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"
+                            fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Akash A P. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("scroll-sequence");
+        const context = canvas.getContext("2d");
+
+        // Use devicePixelRatio for sharper images on high-DPI screens
+        const dpr = window.devicePixelRatio || 1;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            context.scale(dpr, dpr);
+        }
+        resizeCanvas();
+
+        const frameCount = 145;
+        const currentFrame = index => (
+            `ezgif-58a4dfcc0d936184-jpg/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`
+        );
+
+        const images = [];
+
+        // Preload images
+        for (let i = 0; i < frameCount; i++) {
+            const img = new Image();
+            img.src = currentFrame(i);
+            images.push(img);
+        }
+
+        function drawImage(img) {
+            if (!img.complete || img.naturalWidth === 0) return;
+
+            // Draw image covering the canvas (object-fit: cover equivalent)
+            const canvasW = window.innerWidth;
+            const canvasH = window.innerHeight;
+
+            const hRatio = canvasW / img.width;
+            const vRatio = canvasH / img.height;
+            const ratio = Math.max(hRatio, vRatio);
+
+            const centerShift_x = (canvasW - img.width * ratio) / 2;
+            const centerShift_y = (canvasH - img.height * ratio) / 2;
+
+            context.clearRect(0, 0, canvasW, canvasH);
+            context.drawImage(
+                img,
+                0, 0, img.width, img.height,
+                centerShift_x, centerShift_y, img.width * ratio, img.height * ratio
+            );
+        }
+
+        // Draw the first frame when it loads
+        images[0].onload = () => {
+            drawImage(images[0]);
+        };
+
+        let currentFrameIndex = 0;
+        let targetScrollFraction = 0;
+        let currentScrollFraction = 0;
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop;
+            const maxScrollTop = document.documentElement.scrollHeight - window.innerHeight;
+            targetScrollFraction = scrollTop / maxScrollTop;
+        });
+
+        function updateAnimation() {
+            // Smoothly interpolate current scroll fraction towards target (adjust 0.08 for smoothness)
+            currentScrollFraction += (targetScrollFraction - currentScrollFraction) * 0.08;
+
+            const maxAllowedFrame = 110;
+            const frameIndex = Math.min(
+                maxAllowedFrame,
+                Math.max(0, Math.floor(currentScrollFraction * maxAllowedFrame))
+            );
+
+            // Only draw if the image exists and is ready
+            if (images[frameIndex]) {
+                drawImage(images[frameIndex]);
+                currentFrameIndex = frameIndex; // keep track for resize event
+            }
+
+            // Animate social sidebar smoothly: drift upward and fade slightly
+            const sidebar = document.getElementById('social-sidebar');
+            if (sidebar) {
+                const sidebarShift = currentScrollFraction * -80; // moves up 80px over full scroll
+                const sidebarOpacity = 1 - currentScrollFraction * 0.4; // fades slightly to 60% opacity
+                sidebar.style.transform = `translateY(calc(-50% + ${sidebarShift}px))`;
+                sidebar.style.opacity = sidebarOpacity;
+            }
+
+            window.requestAnimationFrame(updateAnimation);
+        }
+
+        // Start the continuous render loop
+        window.requestAnimationFrame(updateAnimation);
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            if (images[currentFrameIndex]) {
+                drawImage(images[currentFrameIndex]);
+            }
+        });
+    </script>
+</body>
+
+</html>
